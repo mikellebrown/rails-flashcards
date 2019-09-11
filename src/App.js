@@ -1,26 +1,60 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
+import { Container, Header } from 'semantic-ui-react';
+import Cards from './Cards';
+// import Card from './Card';
+import CardForm from './CardForm';
 
-function App() {
+
+
+class App extends Component {
+  state = {
+  cards: [
+  { id: 1, front: "State", back: "State is a plain javascript object that we can store properties in.", },
+  { id: 2, front: "Props", back: "Props are properties that can be passed down from parent to child.", },
+  
+  ], showForm: true,
+  };
+  getId = () => {
+    return Math.floor((1 + Math.random()) * 10000);
+  };
+
+  newCard = (props) => {
+    let card = { id: this.getId(),...props, };
+    this.setState({ cards: [card,...this.state.cards], });
+  };
+
+  removeCard = (id) => {
+    const cards = this.state.cards.filter( card => {
+      if (card.id !== id)
+        return card
+     
+    });
+    this.setState({ cards: [...cards], });
+    
+  };
+  
+  toggleForm = () => 
+  this.setState({ showForm: !this.state.showForm, });
+
+
+
+
+
+  render() {
+  const { showForm, } = this.state;
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container>
+    <Header as="h1">React Flash Cards</Header>
+    <CardForm newCard={this.newCard} />
+    <Cards cards={this.state.cards} remove={this.removeCard} />
+    </Container>
+  
   );
-}
+  
+  }
+  
+  }
+  
 
 export default App;
