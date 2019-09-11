@@ -7,13 +7,13 @@ import CardForm from './CardForm';
 
 
 
+
 class App extends Component {
   state = {
   cards: [
-  { id: 1, front: "State", back: "State is a plain javascript object that we can store properties in.", },
-  { id: 2, front: "Props", back: "Props are properties that can be passed down from parent to child.", },
-  
-  ], showForm: true,
+  { id: 1, front: "State", back: "State is a plain javascript object that we can store properties in.", isFlipped: false },
+  { id: 2, front: "Props", back: "Props are properties that can be passed down from parent to child.", isFlipped: false },
+  ], showForm: true, 
   };
   getId = () => {
     return Math.floor((1 + Math.random()) * 10000);
@@ -33,28 +33,50 @@ class App extends Component {
     this.setState({ cards: [...cards], });
     
   };
+
   
-  toggleForm = () => 
-  this.setState({ showForm: !this.state.showForm, });
+  // toggleForm = () => 
+  // this.setState({ showForm: !this.state.showForm, });
+
+  flipCard = (id) => {
+    this.setState({
+      cards: this.state.cards.map( card => {
+        if (card.id === id) {
+          return { ...card, isFlipped: !card.Flipped}
+        }
+          return card
+        })
+        
+    });
+  };
 
 
 
-
+  
 
   render() {
-  const { showForm, } = this.state;
+ 
   return (
-    <Container>
-    <Header as="h1">React Flash Cards</Header>
+    <Container style={styles.container}  textAlign="center" >
+    <br />
+    <Header as="h1" >React Flash Cards</Header>
     <CardForm newCard={this.newCard} />
-    <Cards cards={this.state.cards} remove={this.removeCard} />
+    <Cards cards={this.state.cards} remove={this.removeCard}  flipCard={this.flipCard} />
     </Container>
   
   );
   
-  }
+  };
   
-  }
+  };
+
+  const styles = {
+    container: {
+      marginTop: "25px",
+
+    },
+  };
+  
   
 
 export default App;

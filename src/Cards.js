@@ -8,18 +8,13 @@ import Card from './Card.js';
 
 
 
-const Cards = ({ cards, remove }) => (
-  
-  <span>
+const Cards = ({ cards, remove, flipCard }) => (
+   <span>
          { 
           cards.map( card => (
-            <Card key={card.id} {...card} remove={remove} />
+            <Card key={card.id} {...card} remove={remove} flipCard={flipCard} />
             
-            
-         
-            
-          
-          ))
+            ))
           }
           
           
